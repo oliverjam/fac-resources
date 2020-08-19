@@ -25,20 +25,21 @@ exports.authenticate = (req, res, next) => {
   github
     .getToken(code)
     .then(github.getUser)
-    .then(model.getExistingUser)
-    .then((existingUser) => {
-      if (existingUser) {
-        return success(existingUser.id);
-      }
-      // new user
-      github.getOrgs.then((user) => {
-        const facMember = user.organizations.some(
-          (org) => org.login === "foundersandcoders"
-        );
-        if (facMember) {
-          return model.createUser(user).then(success);
+    .then((githubUser) => {
+      model.getExistingUser(githubUser).then((existingUser) => {
+        if (existingUser) {
+          return success(existingUser.id);
         }
-        return res.send(templates.facOnly());
+        // new user
+        github.getOrgs(githubUser).then((user) => {
+          const facMember = user.organizations.some(
+            (org) => org.login === "foundersandcoders"
+          );
+          if (facMember) {
+            return model.createUser(user).then(success);
+          }
+          return res.send(templates.facOnly());
+        });
       });
     })
     .catch(next);
