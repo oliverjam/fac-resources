@@ -6,18 +6,13 @@ const templates = require("./templates");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.home = (req, res) => {
-  try {
-    const { token } = req.cookies;
-    if (!token) {
-      return res.send(templates.home());
-    }
-    const { id } = jwt.verify(token, JWT_SECRET);
-    model.getUser(id).then((user) => {
+  const id = res.locals?.auth?.id;
+  if (id) {
+    return model.getUser(id).then((user) => {
       res.send(templates.home({ username: user.username }));
     });
-  } catch (_e) {
-    res.send(templates.home());
   }
+  return res.send(templates.home());
 };
 
 exports.authenticate = (req, res, next) => {
