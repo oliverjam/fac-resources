@@ -14,12 +14,15 @@ exports.home = ({ username } = {}) => {
     "&redirect_uri=http://localhost:3333/authenticate" +
     `&client_id=${clientId}`;
   return layout({
-    content: html`
-      ${username
-        ? html`<h1>Welcome back ${username}</h1>`
-        : html`<h1>Welcome</h1>`}
-      <a href="${url}">Log in</a>
-    `,
+    content: username
+      ? html`
+          <h1>Welcome back ${username}</h1>
+          <a href="logout">Log out</a>
+        `
+      : html`
+          <h1>Welcome</h1>
+          <a href="${url}">Log in</a>
+        `,
   });
 };
 
