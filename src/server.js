@@ -8,6 +8,7 @@ const server = express();
 server.use(logger);
 
 server.get("/", handlers.home);
+server.get("/authenticate", handlers.authenticate);
 
 server.use(handleErrors);
 server.use("*", handlers.missing);
