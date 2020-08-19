@@ -1,5 +1,12 @@
 const db = require("./connect");
 
+exports.getUser = (id) => {
+  const SELECT_USER = `SELECT username, avatar_url FROM users WHERE id = $1`;
+  return db
+    .query(SELECT_USER, [id])
+    .then((result) => (result ? result.rows[0] : undefined));
+};
+
 exports.getExistingUser = (githubUser) => {
   const SELECT_USER = `SELECT id FROM users WHERE username = $1`;
   return db

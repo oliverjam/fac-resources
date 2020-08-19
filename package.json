@@ -13,9 +13,11 @@
   "author": "Oliver Phillips <hello@oliverjam.es> (https://oliverjam.es)",
   "license": "MIT",
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "got": "^11.5.2",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.3.2"
   },
   "devDependencies": {
