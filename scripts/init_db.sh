@@ -12,5 +12,7 @@ echo "${GREEN}Postgres user 'fac_resources_user' created${RESET}"
 psql -q -c "CREATE DATABASE fac_resources WITH OWNER fac_resources_user"
 echo "${GREEN}Postgres database 'fac_resources' created${RESET}"
 
-cp .env.example .env
+cp -n .env.example .env
 echo "${GREEN}'.env' file created${RESET}"
+
+sh ./scripts/build_db.sh

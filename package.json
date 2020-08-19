@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "init_db": "sh init_db.sh"
+    "init_db": "sh scripts/init_db.sh",
+    "build_db": "sh scripts/build_db.sh"
   },
   "keywords": [],
   "author": "Oliver Phillips <hello@oliverjam.es> (https://oliverjam.es)",
