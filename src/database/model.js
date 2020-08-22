@@ -1,7 +1,7 @@
 const db = require("./connect");
 
 exports.getUser = (id) => {
-  const SELECT_USER = `SELECT username, avatar_url FROM users WHERE id = $1`;
+  const SELECT_USER = `SELECT username, email, avatar_url FROM users WHERE id = $1`;
   return db
     .query(SELECT_USER, [id])
     .then((result) => (result ? result.rows[0] : undefined));
@@ -22,4 +22,15 @@ exports.createUser = ({ login, email, avatar_url }) => {
     RETURNING id
   `;
   return db.query(INSERT_USER, values).then((result) => result.rows[0]);
+};
+
+exports.getResources = () => {
+  const SELECT_RESOURCES = `
+    SELECT resources.*, COUNT(votes.user_id) AS total_votes
+      FROM resources JOIN votes ON resources.id = votes.resource_id
+      GROUP BY resources.id
+      ORDER BY total_votes DESC
+    ;
+  `;
+  return db.query(SELECT_RESOURCES).then((res) => res.rows);
 };

@@ -5,12 +5,16 @@ const templates = require("./templates");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-exports.home = (req, res) => {
+exports.home = (req, res, next) => {
   const id = res.locals?.auth?.id;
   if (id) {
-    return model.getUser(id).then((user) => {
-      res.send(templates.home({ username: user.username }));
-    });
+    const userPromise = model.getUser(id);
+    const resourcesPromise = model.getResources();
+    return Promise.all([userPromise, resourcesPromise])
+      .then(([user, resources]) => {
+        res.send(templates.home({ user, resources }));
+      })
+      .catch(next);
   }
   return res.send(templates.home());
 };

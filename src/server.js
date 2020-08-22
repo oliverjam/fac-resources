@@ -9,6 +9,7 @@ const server = express();
 
 server.use(cookieParser());
 server.use(logger);
+server.use(express.static("src/public"));
 
 server.use(getAuthUser);
 server.get("/", handlers.home);
