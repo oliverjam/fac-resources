@@ -12,7 +12,8 @@ exports.home = (req, res, next) => {
     const resourcesPromise = model.getResources();
     return Promise.all([userPromise, resourcesPromise])
       .then(([user, resources]) => {
-        res.send(templates.home({ user, resources }));
+        const ctx = { user, resources, csrf: req.csrfToken };
+        res.send(templates.home(ctx));
       })
       .catch(next);
   }
