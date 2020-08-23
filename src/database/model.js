@@ -27,7 +27,7 @@ exports.createUser = ({ login, email, avatar_url }) => {
 exports.getResources = () => {
   const SELECT_RESOURCES = `
     SELECT resources.*, COUNT(votes.user_id) AS total_votes
-      FROM resources JOIN votes ON resources.id = votes.resource_id
+      FROM resources LEFT JOIN votes ON resources.id = votes.resource_id
       GROUP BY resources.id
       ORDER BY total_votes DESC
     ;
