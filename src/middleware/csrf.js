@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 
-const SECRET = process.env.JWT_SECRET;
+const SECRET = process.env.HASH_SECRET;
 
 const DISALLOWED_METHODS = ["GET", "HEAD", "OPTIONS"];
 

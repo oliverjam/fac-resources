@@ -3,7 +3,7 @@ const github = require("./api/github");
 const model = require("./database/model");
 const templates = require("./templates");
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const HASH_SECRET = process.env.HASH_SECRET;
 
 exports.home = (req, res, next) => {
   const id = res.locals?.auth?.id;
@@ -23,7 +23,7 @@ exports.home = (req, res, next) => {
 exports.authenticate = (req, res, next) => {
   const { code } = req.query;
   const success = (id) => {
-    const token = jwt.sign({ id }, JWT_SECRET);
+    const token = jwt.sign({ id }, HASH_SECRET);
     res.cookie("token", token);
     res.redirect("/");
   };

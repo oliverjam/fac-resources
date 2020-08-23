@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const HASH_SECRET = process.env.HASH_SECRET;
 
 function getAuthUser(req, res, next) {
   const { token } = req.cookies;
@@ -8,7 +8,7 @@ function getAuthUser(req, res, next) {
     return next();
   }
   try {
-    const auth = jwt.verify(token, JWT_SECRET);
+    const auth = jwt.verify(token, HASH_SECRET);
     res.locals.auth = auth;
     return next();
   } catch (_e) {
