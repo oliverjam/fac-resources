@@ -137,3 +137,13 @@ function layout({ title, content, user }) {
     </html>
   `;
 }
+
+function html(strings, ...values) {
+  return strings
+    .filter(Boolean)
+    .map((s, i) => {
+      let v = values[i];
+      return s + (Array.isArray(v) ? v.join("\n") : v ?? "");
+    })
+    .join("");
+}
