@@ -58,3 +58,12 @@ exports.missing = (req, res) => {
   res.status(404);
   res.send("<h1>Not found</h1>");
 };
+
+exports.addResource = (req, res, next) => {
+  const resource = req.body;
+  const userId = res.locals?.auth?.id;
+  model
+    .createResource(resource, userId)
+    .then(() => res.redirect("/"))
+    .catch(next);
+};

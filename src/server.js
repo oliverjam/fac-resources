@@ -15,6 +15,7 @@ server.use(getAuthUser);
 server.get("/", handlers.home);
 server.get("/authenticate", handlers.authenticate);
 server.get("/logout", handlers.logout);
+server.post("/add-resource", handlers.addResource);
 
 server.use(handleErrors);
 server.use("*", handlers.missing);

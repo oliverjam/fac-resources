@@ -2,15 +2,17 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const html = String.raw;
-
 const clientId = process.env.CLIENT_ID;
 const oauthUrl = "https://github.com/login/oauth/authorize";
 
-exports.home = ({ user, resources } = {}) => {
+exports.home = ({ user, resources, csrf } = {}) => {
   return layout({
     user,
-    content: html`${ResourceList({ resources })}`,
+    content: html`
+      <div>
+        ${AddResource({ csrf })} ${ResourceList({ resources })}
+      </div>
+    `,
   });
 };
 
@@ -53,6 +55,36 @@ exports.error = () => {
   });
 };
 
+const AddResource = ({ csrf }) => html`
+  <form action="/add-resource" method="POST">
+    <input type="url" placeholder="URL" aria-label="URL" name="url" required />
+    <input
+      type="text"
+      placeholder="Title"
+      aria-label="URL"
+      name="title"
+      required
+    />
+    <select aria-label="topic" name="topic">
+      <option value="html">HTML</option>
+      <option value="a11y">Accessibility</option>
+      <option value="js">JavaScript</option>
+      <option value="css">CSS</option>
+      <option value="node">Node</option>
+      <option value="auth">Authentication</option>
+      <option value="react">React</option>
+    </select>
+    <select aria-label="type" name="type">
+      <option value="article">Article</option>
+      <option value="video">Video</option>
+      <option value="game">Game</option>
+      <option value="reference">Reference</option>
+    </select>
+    <input type="hidden" name="_csrf" value="${csrf}" />
+    <button type="submit">Upload</button>
+  </form>
+`;
+
 function layout({ title, content, user }) {
   const loginUrl =
     oauthUrl +
@@ -86,7 +118,6 @@ function layout({ title, content, user }) {
             ${user
               ? html`
                   <div class="row">
-                    <a href="/log-out">Log out</a>
                     <img
                       src="${user.avatar_url}"
                       class="avatar"

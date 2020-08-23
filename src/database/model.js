@@ -34,3 +34,18 @@ exports.getResources = () => {
   `;
   return db.query(SELECT_RESOURCES).then((res) => res.rows);
 };
+
+exports.createResource = (resource, userId) => {
+  const INSERT_RESOURCE = `
+    INSERT INTO resources (url, title, topic, type, user_id)
+      VALUES ($1, $2, $3, $4, $5)
+  `;
+  const values = [
+    resource.url,
+    resource.title,
+    resource.topic,
+    resource.type,
+    userId,
+  ];
+  return db.query(INSERT_RESOURCE, values).then((res) => res.rows);
+};
