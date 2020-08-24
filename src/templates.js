@@ -22,7 +22,7 @@ exports.home = ({ user, resources, csrf } = {}) => {
 };
 
 const ResourceList = ({ resources }) => html`
-  <ul class="stack">
+  <ul class="">
     ${resources.map((r) => {
       const url = new URL(r.url);
       const favicon = url.origin + "/favicon.ico";
@@ -32,6 +32,16 @@ const ResourceList = ({ resources }) => html`
           <div>
             <h3>${r.title}</h3>
             <div><a href="${r.url}">${r.url}</a></div>
+          </div>
+          <div class="row" style="--gap: 0.25rem">
+            <svg viewBox="0 0 20 20" width="48" height="48" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <strong>${r.total_votes}</strong>
           </div>
         </li>
       `;

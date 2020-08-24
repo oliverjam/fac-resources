@@ -55,7 +55,6 @@ a {
 }
 
 .row {
-  width: 100%;
   display: flex;
   align-items: center;
   gap: var(--gap, 1rem);
@@ -143,9 +142,9 @@ main {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   border-radius: 0.5rem;
-  padding: 0.75rem;
+  padding: 1.5rem;
 }
 
 .resource:hover {
