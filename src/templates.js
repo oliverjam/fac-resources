@@ -28,10 +28,10 @@ const ResourceList = ({ resources }) => html`
       const favicon = url.origin + "/favicon.ico";
       const votes = r.total_votes;
       return html`
-        <li class="hstack">
+        <li class="hstack" style="--align: flex-start">
           <img src="${favicon}" width="36" height="36" alt="" />
-          <div class="vstack" style="--gap: var(--size-md)">
-            <div class="vstack block-link"" style="--gap: 0">
+          <div class="vstack" style="--gap: var(--size-sm)">
+            <div class="vstack block-link"" style="--gap: var(--size-xs)">
               <h3>${r.title}</h3>
               <a href="${r.url}">${r.url}</a>
             </div>
