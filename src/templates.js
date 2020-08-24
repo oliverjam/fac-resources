@@ -22,16 +22,18 @@ exports.home = ({ user, resources, csrf } = {}) => {
 };
 
 const ResourceList = ({ resources }) => html`
-  <ul class="vstack">
+  <ul class="vstack" style="max-width: max-content">
     ${resources.map((r) => {
       const url = new URL(r.url);
       const favicon = url.origin + "/favicon.ico";
       return html`
-        <li class="hstack resource" style="--pad: var(--size-md)">
-          <img src="${favicon}" width="32" height="32" alt="" />
-          <div class="vstack" style="--gap: 0; flex: 1 0 auto">
-            <h3>${r.title}</h3>
-            <div><a href="${r.url}">${r.url}</a></div>
+        <li class="hstack">
+          <div class="hstack resource" style="--pad: var(--size-md)">
+            <img src="${favicon}" width="32" height="32" alt="" />
+            <div class="vstack" style="--gap: 0;">
+              <h3>${r.title}</h3>
+              <div><a href="${r.url}">${r.url}</a></div>
+            </div>
           </div>
           <div class="spacer"></div>
           <div class="hstack" style="--gap: var(--size-xs)">

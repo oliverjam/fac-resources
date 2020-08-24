@@ -44,9 +44,8 @@ a {
 /* SwiftUI 🤙 */
 .vstack {
   --gap: var(--size-md);
-  --align: flex-start;
+  --align: stretch;
   --pad: 0;
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--gap);
@@ -59,7 +58,6 @@ a {
   --align: center;
   --justify: flex-start;
   --pad: 0;
-  width: 100%;
   display: flex;
   gap: var(--gap);
   align-items: var(--align);
@@ -91,6 +89,7 @@ a {
 
 button,
 .button {
+  max-width: max-content;
   font: inherit;
   font-weight: bold;
   border: 0;
@@ -137,13 +136,6 @@ button:focus {
 main {
   /* max-width: 60rem;
   margin: 0 auto; */
-}
-
-.columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-  gap: var(--size-lg);
-  gap: max(var(--size-lg), var(--size-lg) + 2vw);
 }
 
 .resource {
