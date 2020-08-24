@@ -9,11 +9,11 @@ exports.home = ({ user, resources, csrf } = {}) => {
   return layout({
     user,
     content: html`
-      <div class="stack-lg">
-        <section class="add-resource" aria-label="Add new resource">
+      <div class="vstack" style="--gap: var(--size-lg)">
+        <section aria-label="Add new resource">
           ${AddResource({ csrf })}
         </section>
-        <section class="stack-lg" aria-label="Resources">
+        <section aria-label="Resources">
           ${ResourceList({ resources })}
         </section>
       </div>
@@ -22,18 +22,19 @@ exports.home = ({ user, resources, csrf } = {}) => {
 };
 
 const ResourceList = ({ resources }) => html`
-  <ul class="">
+  <ul class="vstack">
     ${resources.map((r) => {
       const url = new URL(r.url);
       const favicon = url.origin + "/favicon.ico";
       return html`
-        <li class="stack-sm resource">
+        <li class="hstack resource" style="--pad: var(--size-md)">
           <img src="${favicon}" width="32" height="32" alt="" />
-          <div>
+          <div class="vstack" style="--gap: 0">
             <h3>${r.title}</h3>
             <div><a href="${r.url}">${r.url}</a></div>
           </div>
-          <div class="row" style="--gap: 0.25rem">
+          <div class="spacer"></div>
+          <div class="hstack" style="--gap: var(--size-xs)">
             <svg viewBox="0 0 20 20" width="48" height="48" fill="currentColor">
               <path
                 fill-rule="evenodd"
@@ -51,8 +52,13 @@ const ResourceList = ({ resources }) => html`
 
 const AddResource = ({ csrf }) => html`
   <details>
-    <summary class="button">Add post</summary>
-    <form action="/add-resource" method="POST" class="stack">
+    <summary class="button">Add link</summary>
+    <form
+      action="/add-resource"
+      method="POST"
+      class="vstack add-resource"
+      style="--pad: var(--size-lg)"
+    >
       <input
         type="url"
         placeholder="URL"
@@ -67,7 +73,7 @@ const AddResource = ({ csrf }) => html`
         name="title"
         required
       />
-      <div class="row">
+      <div class="hstack">
         <select aria-label="topic" name="topic">
           <option value="html">HTML</option>
           <option value="a11y">Accessibility</option>
