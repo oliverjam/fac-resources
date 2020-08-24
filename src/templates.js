@@ -9,12 +9,12 @@ exports.home = ({ user, resources, csrf } = {}) => {
   return layout({
     user,
     content: html`
-      <div class="vstack" style="--gap: var(--size-lg)">
-        <section aria-label="Add new resource">
-          ${AddResource({ csrf })}
-        </section>
+      <div class="layout">
         <section aria-label="Resources">
           ${ResourceList({ resources })}
+        </section>
+        <section>
+          ${AddResource({ csrf })}
         </section>
       </div>
     `,
@@ -88,62 +88,59 @@ const Actions = ({ votes, name }) => {
 };
 
 const AddResource = ({ csrf }) => html`
-  <details>
-    <summary class="button">New link</summary>
-    <form
-      action="/add-resource"
-      method="POST"
-      class="vstack add-resource"
-      style="--pad: var(--size-lg); --radius: var(--size-md)"
-    >
-      <h2>Add new resource</h2>
+  <form
+    action="/add-resource"
+    method="POST"
+    class="vstack"
+    style="position: sticky; top: var(--size-xl)"
+  >
+    <h2>Add new resource</h2>
+    <div class="vstack" style="--gap: var(--size-sm)">
+      <label for="url">URL</label>
+      <input
+        id="url"
+        type="url"
+        placeholder="e.g. https://code.com/good-stuff"
+        name="url"
+        required
+      />
+    </div>
+    <div class="vstack" style="--gap: var(--size-sm)">
+      <label for="title">Title</label>
+      <input
+        id="title"
+        type="text"
+        placeholder="e.g. How to write good code"
+        name="title"
+        required
+      />
+    </div>
+    <div class="hstack">
       <div class="vstack" style="--gap: var(--size-sm)">
-        <label for="url">URL</label>
-        <input
-          id="url"
-          type="url"
-          placeholder="e.g. https://code.com/good-stuff"
-          name="url"
-          required
-        />
+        <label for="topic">Topic</label>
+        <select name="topic">
+          <option value="html">HTML</option>
+          <option value="a11y">Accessibility</option>
+          <option value="js">JavaScript</option>
+          <option value="css">CSS</option>
+          <option value="node">Node</option>
+          <option value="auth">Authentication</option>
+          <option value="react">React</option>
+        </select>
       </div>
       <div class="vstack" style="--gap: var(--size-sm)">
-        <label for="title">Title</label>
-        <input
-          id="title"
-          type="text"
-          placeholder="e.g. How to write good code"
-          name="title"
-          required
-        />
+        <label for="title">Type</label>
+        <select name="type">
+          <option value="article">Article</option>
+          <option value="video">Video</option>
+          <option value="game">Game</option>
+          <option value="reference">Reference</option>
+        </select>
       </div>
-      <div class="hstack">
-        <div class="vstack" style="--gap: var(--size-sm)">
-          <label for="topic">Topic</label>
-          <select name="topic">
-            <option value="html">HTML</option>
-            <option value="a11y">Accessibility</option>
-            <option value="js">JavaScript</option>
-            <option value="css">CSS</option>
-            <option value="node">Node</option>
-            <option value="auth">Authentication</option>
-            <option value="react">React</option>
-          </select>
-        </div>
-        <div class="vstack" style="--gap: var(--size-sm)">
-          <label for="title">Type</label>
-          <select name="type">
-            <option value="article">Article</option>
-            <option value="video">Video</option>
-            <option value="game">Game</option>
-            <option value="reference">Reference</option>
-          </select>
-        </div>
-      </div>
-      <input type="hidden" name="_csrf" value="${csrf}" />
-      <button type="submit">Save resource</button>
-    </form>
-  </details>
+    </div>
+    <input type="hidden" name="_csrf" value="${csrf}" />
+    <button type="submit">Save resource</button>
+  </form>
 `;
 
 exports.facOnly = () => {

@@ -97,6 +97,20 @@ h6 {
   padding: max(1rem, 1rem + 2vw);
 }
 
+.layout {
+  max-width: 70rem;
+  margin: 0 auto;
+  display: grid;
+  gap: var(--size-lg);
+}
+
+@media (min-width: 56em) {
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 34ch;
+  }
+}
+
 .page-header {
   display: flex;
   align-items: center;
