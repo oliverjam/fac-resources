@@ -9,32 +9,75 @@ exports.home = ({ user, resources, csrf } = {}) => {
   return layout({
     user,
     content: html`
-      <div>
-        ${AddResource({ csrf })} ${ResourceList({ resources })}
+      <div class="stack-lg">
+        <section class="add-resource" aria-label="Add new resource">
+          ${AddResource({ csrf })}
+        </section>
+        <section class="stack-lg" aria-label="Resources">
+          ${ResourceList({ resources })}
+        </section>
       </div>
     `,
   });
 };
 
 const ResourceList = ({ resources }) => html`
-  <section class="stack-lg">
-    <h2>Resources</h2>
-    <ul class="stack">
-      ${resources.map((r) => {
-        const url = new URL(r.url);
-        const favicon = url.origin + "/favicon.ico";
-        return html`
-          <li class="stack-sm resource">
-            <img src="${favicon}" width="32" height="32" alt="" />
-            <div>
-              <h3>${r.title}</h3>
-              <div><a href="${r.url}">${r.url}</a></div>
-            </div>
-          </li>
-        `;
-      })}
-    </ul>
-  </section>
+  <ul class="stack">
+    ${resources.map((r) => {
+      const url = new URL(r.url);
+      const favicon = url.origin + "/favicon.ico";
+      return html`
+        <li class="stack-sm resource">
+          <img src="${favicon}" width="32" height="32" alt="" />
+          <div>
+            <h3>${r.title}</h3>
+            <div><a href="${r.url}">${r.url}</a></div>
+          </div>
+        </li>
+      `;
+    })}
+  </ul>
+`;
+
+const AddResource = ({ csrf }) => html`
+  <details>
+    <summary class="button">Add post</summary>
+    <form action="/add-resource" method="POST" class="stack">
+      <input
+        type="url"
+        placeholder="URL"
+        aria-label="URL"
+        name="url"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Title"
+        aria-label="URL"
+        name="title"
+        required
+      />
+      <div class="row">
+        <select aria-label="topic" name="topic">
+          <option value="html">HTML</option>
+          <option value="a11y">Accessibility</option>
+          <option value="js">JavaScript</option>
+          <option value="css">CSS</option>
+          <option value="node">Node</option>
+          <option value="auth">Authentication</option>
+          <option value="react">React</option>
+        </select>
+        <select aria-label="type" name="type">
+          <option value="article">Article</option>
+          <option value="video">Video</option>
+          <option value="game">Game</option>
+          <option value="reference">Reference</option>
+        </select>
+      </div>
+      <input type="hidden" name="_csrf" value="${csrf}" />
+      <button type="submit">Upload</button>
+    </form>
+  </details>
 `;
 
 exports.facOnly = () => {
@@ -54,36 +97,6 @@ exports.error = () => {
     content: html`<h1>Something went wrong</h1>`,
   });
 };
-
-const AddResource = ({ csrf }) => html`
-  <form action="/add-resource" method="POST">
-    <input type="url" placeholder="URL" aria-label="URL" name="url" required />
-    <input
-      type="text"
-      placeholder="Title"
-      aria-label="URL"
-      name="title"
-      required
-    />
-    <select aria-label="topic" name="topic">
-      <option value="html">HTML</option>
-      <option value="a11y">Accessibility</option>
-      <option value="js">JavaScript</option>
-      <option value="css">CSS</option>
-      <option value="node">Node</option>
-      <option value="auth">Authentication</option>
-      <option value="react">React</option>
-    </select>
-    <select aria-label="type" name="type">
-      <option value="article">Article</option>
-      <option value="video">Video</option>
-      <option value="game">Game</option>
-      <option value="reference">Reference</option>
-    </select>
-    <input type="hidden" name="_csrf" value="${csrf}" />
-    <button type="submit">Upload</button>
-  </form>
-`;
 
 function layout({ title, content, user }) {
   const loginUrl =
@@ -117,15 +130,13 @@ function layout({ title, content, user }) {
             </div>
             ${user
               ? html`
-                  <div class="row">
-                    <img
-                      src="${user.avatar_url}"
-                      class="avatar"
-                      width="48"
-                      height="48"
-                      alt=""
-                    />
-                  </div>
+                  <img
+                    src="${user.avatar_url}"
+                    class="avatar"
+                    width="48"
+                    height="48"
+                    alt=""
+                  />
                 `
               : html`<a href="${loginUrl}">Log in</a>`}
           </header>

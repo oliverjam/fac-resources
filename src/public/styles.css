@@ -10,6 +10,7 @@ html {
   --bg-dark: hsl(240, 10%, 10%);
   --bg-light: hsl(240, 10%, 98%);
   --bg-mid: hsl(240, 10%, 20%);
+  --primary: hsl(60, 100%, 70%);
 }
 
 @media (prefers-reduced-motion) {
@@ -38,6 +39,7 @@ a {
   display: grid;
   grid-row-gap: 1rem;
   justify-items: start;
+  align-content: start;
 }
 
 .stack-sm {
@@ -53,6 +55,7 @@ a {
 }
 
 .row {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: var(--gap, 1rem);
@@ -63,9 +66,9 @@ a {
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 1.5rem;
-  gap: max(1.5rem, 1rem + 2vw);
+  gap: max(1.5rem, 1rem + 4vw);
   padding: 1.5rem;
-  padding: max(1.5rem, 1rem + 2vw);
+  padding: max(1.5rem, 1rem + 4vw);
 }
 
 .page-header {
@@ -76,6 +79,17 @@ a {
   gap: max(2rem, 2rem + 2vw);
 }
 
+button,
+.button {
+  font: inherit;
+  font-weight: bold;
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--text-dark);
+  background-color: var(--primary);
+}
+
 input:not([type="checkbox"]):not([type="radio"]),
 select {
   width: 100%;
@@ -84,11 +98,13 @@ select {
   padding: 0.75rem;
   font: inherit;
   color: inherit;
-  background-color: var(--bg-mid);
+  background-color: var(--input-bg, var(--bg-mid));
 }
 
-input:not([type="checkbox"]):not([type="radio"]):focus {
-  border-color: hsl(60, 100%, 70%);
+input:not([type="checkbox"]):not([type="radio"]):focus,
+select:focus,
+button:focus {
+  border-color: var(--primary);
   outline: 0;
 }
 
@@ -116,6 +132,13 @@ main {
   margin: 0 auto; */
 }
 
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 2rem;
+  gap: max(2rem, 2rem + 2vw);
+}
+
 .resource {
   position: relative;
   display: flex;
@@ -140,4 +163,54 @@ main {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.add-resource {
+  position: relative;
+  justify-self: right;
+}
+
+summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  gap: 0.5rem;
+}
+
+summary::after {
+  content: "+";
+}
+
+details[open] summary::after {
+  content: "×";
+}
+
+/* extend summary to whole screen so clicking outside closes */
+details[open] summary::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.add-resource details > :not(summary) {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* render the children in a card */
+details[open] > :not(summary) {
+  opacity: 1;
+  width: 22rem;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 1rem);
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px hsla(240, 10%, 0%, 0.8),
+    0 4px 12px hsla(240, 10%, 0%, 0.6);
+  padding: 1.5rem;
+  background-color: var(--bg-mid);
+  --input-bg: var(--bg-dark);
 }
