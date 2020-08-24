@@ -17,6 +17,7 @@ html {
   --size-md: 1rem;
   --size-lg: 2rem;
   --size-xl: 4rem;
+  font-size: clamp(0.875rem, 0.6rem + 1vw, 1.125rem);
 }
 
 @media (prefers-reduced-motion) {
@@ -46,11 +47,13 @@ a {
   --gap: var(--size-md);
   --align: stretch;
   --pad: 0;
+  --radius: 0;
   display: flex;
   flex-direction: column;
   gap: var(--gap);
   align-items: var(--align);
   padding: var(--pad);
+  border-radius: var(--radius);
 }
 
 .hstack {
@@ -58,11 +61,13 @@ a {
   --align: center;
   --justify: flex-start;
   --pad: 0;
+  --radius: 0;
   display: flex;
   gap: var(--gap);
   align-items: var(--align);
   justify-content: var(--justify);
   padding: var(--pad);
+  border-radius: var(--radius);
 }
 
 .spacer {
@@ -75,8 +80,8 @@ a {
   grid-template-rows: auto 1fr;
   gap: 1.5rem;
   gap: max(1.5rem, 1rem + 4vw);
-  padding: 1.5rem;
-  padding: max(1.5rem, 1rem + 4vw);
+  padding: 1rem;
+  padding: max(1rem, 1rem + 2vw);
 }
 
 .page-header {
@@ -138,20 +143,19 @@ main {
   margin: 0 auto; */
 }
 
-.resource {
+.block-link {
   position: relative;
-  border-radius: 0.5rem;
 }
 
-.resource:hover {
+.block-link:hover {
   background-color: var(--bg-mid);
 }
 
-.resource a {
+.block-link a {
   text-decoration: none;
 }
 
-.resource a::before {
+.block-link a::before {
   content: "";
   position: absolute;
   top: 0;
@@ -200,14 +204,13 @@ details[open] > :not(summary) {
   opacity: 1;
   position: absolute;
   top: calc(100% + 1rem);
-  border-radius: 1rem;
-  box-shadow: 0 2px 4px hsla(240, 10%, 0%, 0.8),
-    0 4px 12px hsla(240, 10%, 0%, 0.6);
-  background-color: var(--bg-mid);
   z-index: 10;
 }
 
 .add-resource {
-  min-width: 40ch;
   --input-bg: var(--bg-dark);
+  min-width: 40ch;
+  box-shadow: 0 2px 4px hsla(240, 10%, 0%, 0.8),
+    0 4px 12px hsla(240, 10%, 0%, 0.6);
+  background-color: var(--bg-mid);
 }

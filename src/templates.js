@@ -26,31 +26,37 @@ const ResourceList = ({ resources }) => html`
     ${resources.map((r) => {
       const url = new URL(r.url);
       const favicon = url.origin + "/favicon.ico";
+      const votes = r.total_votes;
       return html`
-        <li class="hstack">
-          <div class="hstack resource" style="--pad: var(--size-md)">
-            <img src="${favicon}" width="32" height="32" alt="" />
-            <div class="vstack" style="--gap: 0;">
+        <li class="hstack" style="--pad: 1vw; --radius: var(--size-sm)">
+          <img src="${favicon}" width="32" height="32" alt="" />
+          <div class="vstack" style="--gap: var(--size-sm)">
+            <div class="vstack block-link"" style="--gap: 0">
               <h3>${r.title}</h3>
-              <div><a href="${r.url}">${r.url}</a></div>
+              <a href="${r.url}">${r.url}</a>
             </div>
-          </div>
-          <div class="spacer"></div>
-          <div class="hstack" style="--gap: var(--size-xs)">
-            <svg viewBox="0 0 20 20" width="48" height="48" fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <strong>${r.total_votes}</strong>
+            ${Votes({ votes })}
           </div>
         </li>
       `;
     })}
   </ul>
 `;
+
+const Votes = ({ votes }) => {
+  return html`
+    <div class="hstack" style="--gap: var(--size-xs)">
+      <svg viewBox="0 0 20 20" width="32" height="32" fill="currentColor">
+        <path
+          fill-rule="evenodd"
+          d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      <strong>${votes} ${votes === 1 ? "vote" : "votes"}</strong>
+    </div>
+  `;
+};
 
 const AddResource = ({ csrf }) => html`
   <details>
@@ -59,7 +65,7 @@ const AddResource = ({ csrf }) => html`
       action="/add-resource"
       method="POST"
       class="vstack add-resource"
-      style="--pad: var(--size-lg)"
+      style="--pad: var(--size-lg); --radius: var(--size-md)"
     >
       <h2>Add new resource</h2>
       <div class="vstack" style="--gap: var(--size-sm)">
