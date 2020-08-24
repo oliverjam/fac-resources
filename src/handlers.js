@@ -7,9 +7,10 @@ const HASH_SECRET = process.env.HASH_SECRET;
 
 exports.home = (req, res, next) => {
   const id = res.locals?.auth?.id;
+  const { topic, type } = req.query;
   if (id) {
     const userPromise = model.getUser(id);
-    const resourcesPromise = model.getResources();
+    const resourcesPromise = model.getResources({ topic, type });
     return Promise.all([userPromise, resourcesPromise])
       .then(([user, resources]) => {
         const ctx = { user, resources, csrf: req.csrfToken };

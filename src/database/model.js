@@ -24,15 +24,20 @@ exports.createUser = ({ login, email, avatar_url }) => {
   return db.query(INSERT_USER, values).then((result) => result.rows[0]);
 };
 
-exports.getResources = () => {
+exports.getResources = ({ topic, type }) => {
   const SELECT_RESOURCES = `
     SELECT resources.*, COUNT(votes.user_id) AS total_votes
       FROM resources LEFT JOIN votes ON resources.id = votes.resource_id
+      WHERE (
+        resources.topic = COALESCE($1, resources.topic)
+        AND
+        resources.type = COALESCE($2, resources.type)
+      )
       GROUP BY resources.id
       ORDER BY total_votes DESC
     ;
   `;
-  return db.query(SELECT_RESOURCES).then((res) => res.rows);
+  return db.query(SELECT_RESOURCES, [topic, type]).then((res) => res.rows);
 };
 
 exports.createResource = (resource, userId) => {
