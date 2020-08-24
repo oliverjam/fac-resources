@@ -29,7 +29,7 @@ const ResourceList = ({ resources }) => html`
       return html`
         <li class="hstack resource" style="--pad: var(--size-md)">
           <img src="${favicon}" width="32" height="32" alt="" />
-          <div class="vstack" style="--gap: 0">
+          <div class="vstack" style="--gap: 0; flex: 1 0 auto">
             <h3>${r.title}</h3>
             <div><a href="${r.url}">${r.url}</a></div>
           </div>
@@ -52,46 +52,59 @@ const ResourceList = ({ resources }) => html`
 
 const AddResource = ({ csrf }) => html`
   <details>
-    <summary class="button">Add link</summary>
+    <summary class="button">New link</summary>
     <form
       action="/add-resource"
       method="POST"
       class="vstack add-resource"
       style="--pad: var(--size-lg)"
     >
-      <input
-        type="url"
-        placeholder="URL"
-        aria-label="URL"
-        name="url"
-        required
-      />
-      <input
-        type="text"
-        placeholder="Title"
-        aria-label="URL"
-        name="title"
-        required
-      />
+      <h2>Add new resource</h2>
+      <div class="vstack" style="--gap: var(--size-sm)">
+        <label for="url">URL</label>
+        <input
+          id="url"
+          type="url"
+          placeholder="e.g. https://code.com/good-stuff"
+          name="url"
+          required
+        />
+      </div>
+      <div class="vstack" style="--gap: var(--size-sm)">
+        <label for="title">Title</label>
+        <input
+          id="title"
+          type="text"
+          placeholder="e.g. How to write good code"
+          name="title"
+          required
+        />
+      </div>
       <div class="hstack">
-        <select aria-label="topic" name="topic">
-          <option value="html">HTML</option>
-          <option value="a11y">Accessibility</option>
-          <option value="js">JavaScript</option>
-          <option value="css">CSS</option>
-          <option value="node">Node</option>
-          <option value="auth">Authentication</option>
-          <option value="react">React</option>
-        </select>
-        <select aria-label="type" name="type">
-          <option value="article">Article</option>
-          <option value="video">Video</option>
-          <option value="game">Game</option>
-          <option value="reference">Reference</option>
-        </select>
+        <div class="vstack" style="--gap: var(--size-sm)">
+          <label for="topic">Topic</label>
+          <select name="topic">
+            <option value="html">HTML</option>
+            <option value="a11y">Accessibility</option>
+            <option value="js">JavaScript</option>
+            <option value="css">CSS</option>
+            <option value="node">Node</option>
+            <option value="auth">Authentication</option>
+            <option value="react">React</option>
+          </select>
+        </div>
+        <div class="vstack" style="--gap: var(--size-sm)">
+          <label for="title">Type</label>
+          <select name="type">
+            <option value="article">Article</option>
+            <option value="video">Video</option>
+            <option value="game">Game</option>
+            <option value="reference">Reference</option>
+          </select>
+        </div>
       </div>
       <input type="hidden" name="_csrf" value="${csrf}" />
-      <button type="submit">Upload</button>
+      <button type="submit">Save resource</button>
     </form>
   </details>
 `;

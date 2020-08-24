@@ -46,6 +46,7 @@ a {
   --gap: var(--size-md);
   --align: flex-start;
   --pad: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--gap);
@@ -58,6 +59,7 @@ a {
   --align: center;
   --justify: flex-start;
   --pad: 0;
+  width: 100%;
   display: flex;
   gap: var(--gap);
   align-items: var(--align);
@@ -96,6 +98,10 @@ button,
   padding: var(--size-sm) var(--size-md);
   color: var(--text-dark);
   background-color: var(--primary);
+}
+
+label {
+  font-weight: bold;
 }
 
 input:not([type="checkbox"]):not([type="radio"]),
@@ -210,6 +216,6 @@ details[open] > :not(summary) {
 }
 
 .add-resource {
-  min-width: 36ch;
+  min-width: 40ch;
   --input-bg: var(--bg-dark);
 }
