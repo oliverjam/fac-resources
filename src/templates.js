@@ -22,13 +22,13 @@ exports.home = ({ user, resources, csrf } = {}) => {
 };
 
 const ResourceList = ({ resources }) => html`
-  <ul class="vstack" style="max-width: max-content">
+  <ul class="vstack" style="--gap: var(--size-lg); max-width: max-content">
     ${resources.map((r) => {
       const url = new URL(r.url);
       const favicon = url.origin + "/favicon.ico";
       const votes = r.total_votes;
       return html`
-        <li class="hstack" style="--pad: 1vw; --radius: var(--size-sm)">
+        <li class="hstack">
           <img src="${favicon}" width="36" height="36" alt="" />
           <div class="vstack" style="--gap: var(--size-md)">
             <div class="vstack block-link"" style="--gap: 0">

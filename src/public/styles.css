@@ -48,12 +48,14 @@ a {
   --align: stretch;
   --pad: 0;
   --radius: 0;
+  --bg: transparent;
   display: flex;
   flex-direction: column;
   gap: var(--gap);
   align-items: var(--align);
   padding: var(--pad);
   border-radius: var(--radius);
+  background-color: var(--bg);
 }
 
 .hstack {
@@ -62,12 +64,14 @@ a {
   --justify: flex-start;
   --pad: 0;
   --radius: 0;
+  --bg: transparent;
   display: flex;
   gap: var(--gap);
   align-items: var(--align);
   justify-content: var(--justify);
   padding: var(--pad);
   border-radius: var(--radius);
+  background-color: var(--bg);
 }
 
 .spacer {
@@ -161,12 +165,12 @@ main {
   position: relative;
 }
 
-.block-link:hover {
-  background-color: var(--bg-mid);
-}
-
 .block-link a {
   text-decoration: none;
+}
+
+.block-link a:hover {
+  text-decoration: underline;
 }
 
 .block-link a::before {
