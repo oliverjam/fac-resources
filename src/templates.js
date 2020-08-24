@@ -7,6 +7,7 @@ const oauthUrl = "https://github.com/login/oauth/authorize";
 
 exports.home = ({ user, resources, csrf } = {}) => {
   return layout({
+    title: "All resources",
     user,
     content: html`
       <div class="layout">
@@ -145,6 +146,7 @@ const AddResource = ({ csrf }) => html`
 
 exports.facOnly = () => {
   return layout({
+    title: "Not allowed",
     content: html`
       <h1>Not allowed</h1>
       <p>
@@ -157,6 +159,7 @@ exports.facOnly = () => {
 
 exports.error = () => {
   return layout({
+    title: "Error",
     content: html`<h1>Something went wrong</h1>`,
   });
 };
