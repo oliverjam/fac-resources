@@ -22,13 +22,17 @@ exports.home = ({ user, resources, csrf } = {}) => {
   });
 };
 
-const ResourceList = ({ resources }) => html`
-  <ul class="vstack" style="--gap: var(--size-lg); max-width: max-content">
-    ${resources.map((r) => {
-      const url = new URL(r.url);
-      const favicon = url.origin + "/favicon.ico";
-      const votes = r.total_votes;
-      return html`
+const ResourceList = ({ resources }) => {
+  if (!resources?.length) {
+    return html`<p>No matching links found</p>`;
+  }
+  return html`
+    <ul class="vstack" style="--gap: var(--size-lg); max-width: max-content">
+      ${resources.map((r) => {
+        const url = new URL(r.url);
+        const favicon = url.origin + "/favicon.ico";
+        const votes = r.total_votes;
+        return html`
         <li class="hstack" style="--align: flex-start">
           <img src="${favicon}" width="36" height="36" alt="" />
           <div class="vstack" style="--gap: var(--size-sm)">
@@ -40,9 +44,10 @@ const ResourceList = ({ resources }) => html`
           </div>
         </li>
       `;
-    })}
-  </ul>
-`;
+      })}
+    </ul>
+  `;
+};
 
 const Actions = ({ votes, name }) => {
   return html`

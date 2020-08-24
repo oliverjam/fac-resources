@@ -37,7 +37,9 @@ exports.getResources = ({ topic, type }) => {
       ORDER BY total_votes DESC
     ;
   `;
-  return db.query(SELECT_RESOURCES, [topic, type]).then((res) => res.rows);
+  return db
+    .query(SELECT_RESOURCES, [topic ? topic : null, type ? type : null])
+    .then((res) => res.rows);
 };
 
 exports.createResource = (resource, userId) => {
