@@ -102,6 +102,20 @@ button,
   padding: var(--size-sm) var(--size-md);
   color: var(--text-dark);
   background-color: var(--primary);
+  cursor: pointer;
+}
+
+button.icon,
+.button.icon {
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+}
+
+button.icon:hover,
+.button.icon:hover {
+  --color: var(--primary);
+  color: var(--color);
 }
 
 label {
@@ -170,7 +184,6 @@ details {
 
 summary {
   list-style: none;
-  cursor: pointer;
   display: flex;
   gap: var(--size-sm);
 }
