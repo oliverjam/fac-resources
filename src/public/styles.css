@@ -9,7 +9,7 @@ html {
   --text-light: hsl(240, 10%, 98%);
   --bg-dark: hsl(240, 10%, 10%);
   --bg-light: hsl(240, 10%, 98%);
-  --bg-mid: hsl(240, 10%, 20%);
+  --bg-mid: hsl(240, 10%, 25%);
   --primary: hsl(60, 100%, 70%);
   --size-xs: 0.25rem;
   --size-sm: 0.5rem;
@@ -127,6 +127,7 @@ button,
   border: 0;
   border-radius: 0.5rem;
   padding: var(--size-sm) var(--size-md);
+  line-height: 1;
   color: var(--text-dark);
   background-color: var(--primary);
   cursor: pointer;
@@ -154,10 +155,38 @@ select {
   width: 100%;
   border-radius: 0.5rem;
   border: 0.125rem solid transparent;
-  padding: 0.75rem;
+  padding: 0.5rem;
+  line-height: 1;
   font: inherit;
   color: inherit;
   background-color: var(--input-bg, var(--bg-mid));
+}
+
+select {
+  appearance: none;
+  padding: 0.25rem 0.5rem;
+  grid-column: 1 / 3;
+  grid-row: 1 / 1;
+}
+
+.select {
+  display: grid;
+  grid-template-columns: 1fr 1rem;
+  grid-template-rows: auto;
+}
+
+.select::after {
+  content: "▾";
+  grid-column: 2 / 3;
+  grid-row: 1 / 1;
+  display: grid;
+  place-content: center;
+  padding-right: 0.5rem;
+  pointer-events: none;
+}
+
+select::after {
+  content: "hi";
 }
 
 input:not([type="checkbox"]):not([type="radio"]):focus,
