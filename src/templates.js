@@ -135,54 +135,59 @@ const AddResource = ({ csrf }) => html`
     action="/add-resource"
     method="POST"
     class="vstack"
-    style="position: sticky; top: var(--size-xl)"
+    style="position: sticky; top: var(--size-xl); --gap: var(--size-lg)"
   >
-    <h2>Add new resource</h2>
-    <div class="vstack" style="--gap: var(--size-sm)">
-      <label for="url">URL</label>
-      <input
-        id="url"
-        type="url"
-        placeholder="e.g. https://code.com/good-stuff"
-        name="url"
-        required
-      />
-    </div>
-    <div class="vstack" style="--gap: var(--size-sm)">
-      <label for="title">Title</label>
-      <input
-        id="title"
-        type="text"
-        placeholder="e.g. How to write good code"
-        name="title"
-        required
-      />
-    </div>
-    <div class="hstack">
+    <div class="vstack">
       <div class="vstack" style="--gap: var(--size-sm)">
-        <label for="topic">Topic</label>
-        <select name="topic">
-          <option value="html">HTML</option>
-          <option value="a11y">Accessibility</option>
-          <option value="js">JavaScript</option>
-          <option value="css">CSS</option>
-          <option value="node">Node</option>
-          <option value="auth">Authentication</option>
-          <option value="react">React</option>
-        </select>
+        <label for="url">URL</label>
+        <input
+          id="url"
+          type="url"
+          placeholder="e.g. https://code.com/good-stuff"
+          name="url"
+          required
+        />
       </div>
       <div class="vstack" style="--gap: var(--size-sm)">
-        <label for="title">Type</label>
-        <select name="type">
-          <option value="article">Article</option>
-          <option value="video">Video</option>
-          <option value="game">Game</option>
-          <option value="reference">Reference</option>
-        </select>
+        <label for="title">Title</label>
+        <input
+          id="title"
+          type="text"
+          placeholder="e.g. How to write good code"
+          name="title"
+          required
+        />
+      </div>
+      <div class="hstack">
+        <div class="vstack" style="--gap: var(--size-sm)">
+          <label for="topic">Topic</label>
+          <div class="select">
+            <select name="topic">
+              <option value="html">HTML</option>
+              <option value="a11y">Accessibility</option>
+              <option value="js">JavaScript</option>
+              <option value="css">CSS</option>
+              <option value="node">Node</option>
+              <option value="auth">Authentication</option>
+              <option value="react">React</option>
+            </select>
+          </div>
+        </div>
+        <div class="vstack" style="--gap: var(--size-sm)">
+          <label for="title">Type</label>
+          <div class="select">
+            <select name="type">
+              <option value="article">Article</option>
+              <option value="video">Video</option>
+              <option value="game">Game</option>
+              <option value="reference">Reference</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
     <input type="hidden" name="_csrf" value="${csrf}" />
-    <button type="submit">Save resource</button>
+    <button type="submit">Add resource +</button>
   </form>
 `;
 
