@@ -11,8 +11,12 @@ exports.home = ({ user, resources, csrf } = {}) => {
     user,
     content: html`
       <div class="layout">
-        <section aria-label="Resources">
-          ${ResourceList({ resources })}
+        <section
+          aria-label="Resources"
+          class="vstack"
+          style="--gap: var(--size-xl)"
+        >
+          ${Filters()} ${ResourceList({ resources })}
         </section>
         <section>
           ${AddResource({ csrf })}
@@ -20,6 +24,39 @@ exports.home = ({ user, resources, csrf } = {}) => {
       </div>
     `,
   });
+};
+
+const Filters = () => {
+  return html`
+    <form class="hstack">
+      <div class="hstack" style="--gap: var(--size-sm)">
+        <div class="select">
+          <select aria-label="Topic" name="topic" required>
+            <option value="">All topics</option>
+            <option value="html">HTML</option>
+            <option value="a11y">Accessibility</option>
+            <option value="js">JavaScript</option>
+            <option value="css">CSS</option>
+            <option value="node">Node</option>
+            <option value="auth">Authentication</option>
+            <option value="react">React</option>
+          </select>
+        </div>
+      </div>
+      <div class="hstack" style="--gap: var(--size-sm)">
+        <div class="select">
+          <select aria-label="Type" name="type" required>
+            <option value="">All types</option>
+            <option value="article">Article</option>
+            <option value="video">Video</option>
+            <option value="game">Game</option>
+            <option value="reference">Reference</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" style="align-self: flex-end">Filter</button>
+    </form>
+  `;
 };
 
 const ResourceList = ({ resources }) => {

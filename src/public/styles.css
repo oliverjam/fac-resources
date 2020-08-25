@@ -101,7 +101,7 @@ h6 {
   max-width: 70rem;
   margin: 0 auto;
   display: grid;
-  gap: var(--size-lg);
+  gap: var(--size-xl);
 }
 
 @media (min-width: 56em) {
