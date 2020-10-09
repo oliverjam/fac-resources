@@ -65,3 +65,14 @@ exports.addResource = (req, res, next) => {
     .then(() => res.redirect("/"))
     .catch(next);
 };
+
+exports.vote = (req, res, next) => {
+  const userId = res.locals?.user?.id;
+  const resourceId = req.params.id;
+  model
+    .voteForResource(resourceId, userId)
+    .then(() => res.redirect("/"))
+    .catch((error) => {
+      next(error);
+    });
+};

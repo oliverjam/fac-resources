@@ -59,3 +59,11 @@ exports.createResource = (resource, userId) => {
   ];
   return db.query(INSERT_RESOURCE, values).then((res) => res.rows);
 };
+
+exports.voteForResource = (resourceId, userId) => {
+  const INSERT_VOTE = `
+    INSERT INTO votes (resource_id, user_id)
+      VALUES ($1, $2) 
+  `;
+  return db.query(INSERT_VOTE, [resourceId, userId]).then((res) => res.rows);
+};
