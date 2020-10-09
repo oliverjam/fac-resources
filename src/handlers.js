@@ -5,20 +5,16 @@ const templates = require("./templates");
 
 const HASH_SECRET = process.env.HASH_SECRET;
 
-exports.home = (req, res, next) => {
-  const id = res.locals?.auth?.id;
-  const { topic, type } = req.query;
-  if (id) {
-    const userPromise = model.getUser(id);
-    const resourcesPromise = model.getResources({ topic, type });
-    return Promise.all([userPromise, resourcesPromise])
-      .then(([user, resources]) => {
-        const ctx = { user, resources, csrf: req.csrfToken };
-        res.send(templates.home(ctx));
-      })
-      .catch(next);
+exports.home = async (req, res, next) => {
+  try {
+    const user = res.locals?.user;
+    const { topic, type } = req.query;
+    const resources = await model.getResources({ topic, type });
+    const ctx = { user, resources, csrf: req.csrfToken };
+    res.send(templates.home(ctx));
+  } catch (error) {
+    next(error);
   }
-  return res.send(templates.home());
 };
 
 exports.authenticate = (req, res, next) => {
@@ -63,7 +59,7 @@ exports.missing = (req, res) => {
 
 exports.addResource = (req, res, next) => {
   const resource = req.body;
-  const userId = res.locals?.auth?.id;
+  const userId = res.locals?.user?.id;
   model
     .createResource(resource, userId)
     .then(() => res.redirect("/"))

@@ -1,15 +1,17 @@
 const jwt = require("jsonwebtoken");
+const model = require("../database/model");
 
 const HASH_SECRET = process.env.HASH_SECRET;
 
-function getAuthUser(req, res, next) {
+async function getAuthUser(req, res, next) {
   const { token } = req.cookies;
   if (!token) {
     return next();
   }
   try {
     const auth = jwt.verify(token, HASH_SECRET);
-    res.locals.auth = auth;
+    const user = await model.getUser(auth.id);
+    res.locals.user = user;
     return next();
   } catch (_e) {
     return next();
