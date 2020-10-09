@@ -60,7 +60,36 @@ const Filters = ({ topic, type }) => {
           </select>
         </div>
       </div>
-      <button type="submit" style="align-self: flex-end">Filter</button>
+      <button type="submit" data-primary style="align-self: flex-end">
+        Filter
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"
+          />
+        </svg>
+      </button>
+      <a href="/" class="button">
+        Clear
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </a>
     </form>
   `;
 };
@@ -101,7 +130,12 @@ const Actions = ({ votes, name }) => {
   return html`
     <div class="hstack" style="--gap: var(--size-lg)">
       <div class="hstack" style="--gap: var(--size-xs)">
-        <button class="icon" aria-label="Vote for ${name}" style="--color: red">
+        <button
+          class="icon"
+          data-primary
+          aria-label="Vote for ${name}"
+          style="--color: red"
+        >
           <svg
             fill="none"
             viewBox="0 0 24 24"
@@ -198,7 +232,7 @@ const AddResource = ({ csrf }) => html`
       </div>
     </div>
     <input type="hidden" name="_csrf" value="${csrf}" />
-    <button type="submit">Add resource +</button>
+    <button type="submit" data-primary>Add resource +</button>
   </form>
 `;
 

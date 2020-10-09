@@ -122,6 +122,9 @@ h6 {
 button,
 .button {
   max-width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   font: inherit;
   font-weight: bold;
   border: 0;
@@ -129,8 +132,14 @@ button,
   padding: var(--size-sm) var(--size-md);
   line-height: 1;
   color: var(--text-dark);
-  background-color: var(--primary);
+  background-color: var(--bg-light);
   cursor: pointer;
+  text-decoration: none;
+}
+
+button[data-primary],
+.button[data-primary] {
+  background-color: var(--primary);
 }
 
 button.icon,
