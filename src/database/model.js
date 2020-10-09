@@ -38,7 +38,10 @@ exports.getResources = ({ topic, type }) => {
     ;
   `;
   return db
-    .query(SELECT_RESOURCES, [topic ? topic : null, type ? type : null])
+    .query(SELECT_RESOURCES, [
+      topic === "all" ? null : topic,
+      type === "all" ? null : type,
+    ])
     .then((res) => res.rows);
 };
 

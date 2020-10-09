@@ -5,7 +5,7 @@ dotenv.config();
 const clientId = process.env.CLIENT_ID;
 const oauthUrl = "https://github.com/login/oauth/authorize";
 
-exports.home = ({ user, resources, csrf } = {}) => {
+exports.home = ({ user, resources, csrf, topic, type } = {}) => {
   return layout({
     title: "All resources",
     user,
@@ -16,47 +16,58 @@ exports.home = ({ user, resources, csrf } = {}) => {
           class="vstack"
           style="--gap: var(--size-xl)"
         >
-          ${Filters()} ${ResourceList({ resources })}
+          ${Filters({ topic, type })} ${ResourceList({ resources })}
         </section>
-        <section>
-          ${AddResource({ csrf })}
-        </section>
+        <section>${AddResource({ csrf })}</section>
       </div>
     `,
   });
 };
 
-const Filters = () => {
+const topics = [
+  ["all", "All topics"],
+  ["html", "HTML"],
+  ["a11y", "Accessibility"],
+  ["js", "JavaScript"],
+  ["css", "CSS"],
+  ["node", "Node"],
+  ["auth", "Authentication"],
+  ["react", "React"],
+];
+
+const types = [
+  ["all", "All types"],
+  ["article", "Article"],
+  ["video", "Video"],
+  ["game", "Game"],
+  ["reference", "Reference"],
+];
+
+const Filters = ({ topic, type }) => {
   return html`
     <form class="hstack">
       <div class="hstack" style="--gap: var(--size-sm)">
         <div class="select">
           <select aria-label="Topic" name="topic" required>
-            <option value="">All topics</option>
-            <option value="html">HTML</option>
-            <option value="a11y">Accessibility</option>
-            <option value="js">JavaScript</option>
-            <option value="css">CSS</option>
-            <option value="node">Node</option>
-            <option value="auth">Authentication</option>
-            <option value="react">React</option>
+            ${topics.map(FilterOption(topic))}
           </select>
         </div>
       </div>
       <div class="hstack" style="--gap: var(--size-sm)">
         <div class="select">
           <select aria-label="Type" name="type" required>
-            <option value="">All types</option>
-            <option value="article">Article</option>
-            <option value="video">Video</option>
-            <option value="game">Game</option>
-            <option value="reference">Reference</option>
+            ${types.map(FilterOption(type))}
           </select>
         </div>
       </div>
       <button type="submit" style="align-self: flex-end">Filter</button>
     </form>
   `;
+};
+
+const FilterOption = (current) => ([value, label]) => {
+  const selected = value === current ? "selected" : "";
+  return html` <option value="${value}" ${selected}>${label}</option> `;
 };
 
 const ResourceList = ({ resources }) => {
@@ -253,9 +264,7 @@ function layout({ title, content, user }) {
                 `
               : html`<a href="${loginUrl}">Log in</a>`}
           </header>
-          <main>
-            ${content}
-          </main>
+          <main>${content}</main>
         </div>
       </body>
     </html>
