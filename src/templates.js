@@ -45,22 +45,18 @@ const types = [
 
 const Filters = ({ topic, type }) => {
   return html`
-    <form class="hstack">
-      <div class="hstack" style="--gap: var(--size-sm)">
-        <div class="select">
-          <select aria-label="Topic" name="topic" required>
-            ${topics.map(FilterOption(topic))}
-          </select>
-        </div>
+    <form class="hstack" style="--align: stretch">
+      <div class="select">
+        <select aria-label="Topic" name="topic" required>
+          ${topics.map(FilterOption(topic))}
+        </select>
       </div>
-      <div class="hstack" style="--gap: var(--size-sm)">
-        <div class="select">
-          <select aria-label="Type" name="type" required>
-            ${types.map(FilterOption(type))}
-          </select>
-        </div>
+      <div class="select">
+        <select aria-label="Type" name="type" required>
+          ${types.map(FilterOption(type))}
+        </select>
       </div>
-      <button type="submit" data-primary style="align-self: flex-end">
+      <button type="submit" data-primary>
         Filter
         <svg
           xmlns="http://www.w3.org/2000/svg"
