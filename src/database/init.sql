@@ -22,7 +22,8 @@ CREATE TABLE resources (
 CREATE TABLE votes (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id) NOT NULL,
-  resource_id INTEGER REFERENCES resources(id) NOT NULL
+  resource_id INTEGER REFERENCES resources(id) NOT NULL,
+  UNIQUE (user_id, resource_id)
 );
 
 INSERT INTO users (username, email, avatar_url)
