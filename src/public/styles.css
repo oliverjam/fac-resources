@@ -157,6 +157,12 @@ button.icon:hover,
   color: var(--color);
 }
 
+button.icon svg[data-voted="true"],
+.button.icon svg[data-voted="true"] {
+  fill: var(--color);
+  stroke: var(--color);
+}
+
 label {
   font-weight: bold;
 }

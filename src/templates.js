@@ -104,7 +104,6 @@ const ResourceList = ({ resources }) => {
       ${resources.map((r) => {
         const url = new URL(r.url);
         const favicon = url.origin + "/favicon.ico";
-        const votes = r.total_votes;
         return html`
         <li class="hstack" style="--align: flex-start">
           <img src="${favicon}" width="36" height="36" alt="" />
@@ -113,7 +112,7 @@ const ResourceList = ({ resources }) => {
               <h3>${r.title}</h3>
               <a href="${r.url}">${r.url}</a>
             </div>
-            ${Actions({ votes, name: r.title })}
+            ${Actions(r)}
           </div>
         </li>
       `;
@@ -122,13 +121,14 @@ const ResourceList = ({ resources }) => {
   `;
 };
 
-const Actions = ({ votes, name }) => {
+const Actions = ({ id, name, voted_for, total_votes }) => {
+  const tag = voted_for ? "span" : "a";
   return html`
     <div class="hstack" style="--gap: var(--size-lg)">
       <div class="hstack" style="--gap: var(--size-xs)">
-        <button
-          class="icon"
-          data-primary
+        <${tag}
+          ${voted_for ? "" : `href="/vote/${id}"`}
+          class="button icon"
           aria-label="Vote for ${name}"
           style="--color: red"
         >
@@ -138,6 +138,7 @@ const Actions = ({ votes, name }) => {
             width="32"
             height="32"
             stroke="currentColor"
+            data-voted="${voted_for}"
           >
             <path
               stroke-linecap="round"
@@ -146,8 +147,8 @@ const Actions = ({ votes, name }) => {
               d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
             ></path>
           </svg>
-        </button>
-        <strong>${votes}</strong>
+        </${tag}>
+        <strong>${total_votes}</strong>
       </div>
       <div class="hstack" style="--gap: var(--size-xs)">
         <button class="icon" aria-label="Bookmark ${name}">
@@ -280,7 +281,7 @@ function layout({ title, content, user }) {
         <meta charset="utf-8" />
         <title>${title} | FAC Resources</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href="styles.css" rel="stylesheet" />
+        <link href="/styles.css" rel="stylesheet" />
       </head>
       <body>
         <div class="page">
