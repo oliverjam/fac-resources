@@ -24,21 +24,32 @@ exports.createUser = ({ login, email, avatar_url }) => {
   return db.query(INSERT_USER, values).then((result) => result.rows[0]);
 };
 
-exports.getResources = ({ topic, type }) => {
+exports.getResources = ({ userId, topic, type }) => {
   const SELECT_RESOURCES = `
-    SELECT resources.*, COUNT(votes.user_id) AS total_votes
-      FROM resources LEFT JOIN votes ON resources.id = votes.resource_id
-      WHERE (
-        resources.topic = COALESCE($1, resources.topic)
-        AND
-        resources.type = COALESCE($2, resources.type)
-      )
-      GROUP BY resources.id
-      ORDER BY total_votes DESC
-    ;
+    SELECT
+      resources.*,
+      CASE
+        WHEN resources.id in (
+          SELECT resources.id
+          FROM resources LEFT JOIN votes ON resources.id = votes.resource_id
+          WHERE votes.user_id = $1
+        ) 
+        THEN true ELSE false
+        END
+      AS voted_for,
+      COUNT(votes.user_id) AS total_votes
+    FROM resources LEFT JOIN votes ON resources.id = votes.resource_id
+    WHERE (
+      resources.topic = COALESCE($2, resources.topic)
+      AND
+      resources.type = COALESCE($3, resources.type)
+    )
+    GROUP BY resources.id
+    ORDER BY total_votes DESC
   `;
   return db
     .query(SELECT_RESOURCES, [
+      userId,
       topic === "all" ? null : topic,
       type === "all" ? null : type,
     ])

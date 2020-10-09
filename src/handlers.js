@@ -9,7 +9,12 @@ exports.home = async (req, res, next) => {
   try {
     const user = res.locals?.user;
     const { topic, type } = req.query;
-    const resources = await model.getResources({ topic, type });
+    const resources = await model.getResources({
+      userId: user.id,
+      topic,
+      type,
+    });
+    console.log(resources);
     const ctx = { user, resources, csrf: req.csrfToken, topic, type };
     res.send(templates.home(ctx));
   } catch (error) {
