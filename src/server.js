@@ -19,7 +19,8 @@ server.get("/", handlers.home);
 server.get("/authenticate", handlers.authenticate);
 server.get("/logout", handlers.logout);
 server.post("/add-resource", handlers.addResource);
-server.get("/vote/:id", handlers.vote);
+server.get("/add-vote/:id", handlers.addVote);
+server.get("/remove-vote/:id", handlers.removeVote);
 
 server.use(handleErrors);
 server.use("*", handlers.missing);

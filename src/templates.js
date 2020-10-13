@@ -122,12 +122,12 @@ const ResourceList = ({ resources }) => {
 };
 
 const Actions = ({ id, name, voted_for, total_votes }) => {
-  const tag = voted_for ? "span" : "a";
+  const voteUrl = voted_for ? "/remove-vote/" : "/add-vote/";
   return html`
     <div class="hstack" style="--gap: var(--size-lg)">
       <div class="hstack" style="--gap: var(--size-xs)">
-        <${tag}
-          ${voted_for ? "" : `href="/vote/${id}"`}
+        <a
+          href="${voteUrl + id}"
           class="button icon"
           aria-label="Vote for ${name}"
           style="--color: red"
@@ -147,7 +147,7 @@ const Actions = ({ id, name, voted_for, total_votes }) => {
               d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
             ></path>
           </svg>
-        </${tag}>
+        </a>
         <strong>${total_votes}</strong>
       </div>
       <div class="hstack" style="--gap: var(--size-xs)">

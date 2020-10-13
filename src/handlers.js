@@ -71,11 +71,22 @@ exports.addResource = (req, res, next) => {
     .catch(next);
 };
 
-exports.vote = (req, res, next) => {
+exports.addVote = (req, res, next) => {
   const userId = res.locals?.user?.id;
   const resourceId = req.params.id;
   model
-    .voteForResource(resourceId, userId)
+    .createVote(resourceId, userId)
+    .then(() => res.redirect("/"))
+    .catch((error) => {
+      next(error);
+    });
+};
+
+exports.removeVote = (req, res, next) => {
+  const userId = res.locals?.user?.id;
+  const resourceId = req.params.id;
+  model
+    .deleteVote(resourceId, userId)
     .then(() => res.redirect("/"))
     .catch((error) => {
       next(error);

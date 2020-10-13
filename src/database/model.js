@@ -71,10 +71,17 @@ exports.createResource = (resource, userId) => {
   return db.query(INSERT_RESOURCE, values).then((res) => res.rows);
 };
 
-exports.voteForResource = (resourceId, userId) => {
+exports.createVote = (resourceId, userId) => {
   const INSERT_VOTE = `
     INSERT INTO votes (resource_id, user_id)
       VALUES ($1, $2) 
   `;
   return db.query(INSERT_VOTE, [resourceId, userId]).then((res) => res.rows);
+};
+
+exports.deleteVote = (resourceId, userId) => {
+  const DELETE_VOTE = `
+    DELETE FROM votes WHERE resource_id = $1 AND user_id = $2
+  `;
+  return db.query(DELETE_VOTE, [resourceId, userId]).then((res) => res.rows);
 };
